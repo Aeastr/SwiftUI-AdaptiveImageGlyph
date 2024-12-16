@@ -13,8 +13,8 @@ SwiftUI AdaptiveImageGlyph is a sample project that demonstrates how to integrat
 - SwiftUI
 
 ## Usage
-	•	The examples show how to use UITextView for handling rich text in SwiftUI.
-	•	Adaptive Image Glyphs (Genmoji) are automatically supported through the supportsAdaptiveImageGlyph flag.
+- The examples show how to use UITextView for handling rich text in SwiftUI.
+- Adaptive Image Glyphs (Genmoji) are automatically supported through the supportsAdaptiveImageGlyph flag.
 
 # License
 
