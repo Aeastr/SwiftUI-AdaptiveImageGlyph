@@ -12,28 +12,29 @@ import UIKit
 /// A SwiftUI wrapper for `UITextView` that supports rich text editing and emoji keyboard adaptation.
 struct RichTextEditor: UIViewRepresentable {
     @Binding var attributedText: NSAttributedString
+    var fontSize: CGFloat = 50
     var onEditingChanged: ((Bool) -> Void)? = nil
     var onCommit: (() -> Void)? = nil
-
+    
     // Coordinator to manage the delegate callbacks of UITextView
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: RichTextEditor
-
+        
         init(_ parent: RichTextEditor) {
             self.parent = parent
         }
-
+        
         /// Called when the text view begins editing.
         func textViewDidBeginEditing(_ textView: UITextView) {
             parent.onEditingChanged?(true)
         }
-
+        
         /// Called when the text view ends editing.
         func textViewDidEndEditing(_ textView: UITextView) {
             parent.onEditingChanged?(false)
             parent.onCommit?()
         }
-
+        
         /// Called when the text view's content changes.
         func textViewDidChange(_ textView: UITextView) {
             // Update the `attributedText` binding only if there is a change
@@ -42,12 +43,12 @@ struct RichTextEditor: UIViewRepresentable {
             }
         }
     }
-
+    
     /// Creates a coordinator instance to manage the UITextView's delegate.
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-
+    
     /// Creates and configures the `EmojiTextView` instance.
     func makeUIView(context: Context) -> EmojiTextView {
         let textView = EmojiTextView()
@@ -58,16 +59,21 @@ struct RichTextEditor: UIViewRepresentable {
         
         // MARK: Enable adaptive image glyphs
         textView.supportsAdaptiveImageGlyph = true
-
+        
         // Set the initial attributed text
         textView.attributedText = attributedText
-
+        
+        // Configure initial typing attributes with font size
+        textView.typingAttributes = [
+            .font: UIFont.systemFont(ofSize: fontSize)
+        ]
+        
         // Configure padding for the text container
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 12, bottom: 15, right: 12)
-
+        
         return textView
     }
-
+    
     /// Updates the `EmojiTextView` with new data when the SwiftUI state changes.
     func updateUIView(_ uiView: EmojiTextView, context: Context) {
         // Update the text only if the content has changed
@@ -81,7 +87,7 @@ struct RichTextEditor: UIViewRepresentable {
 class EmojiTextView: UITextView {
     /// Provides a non-nil identifier to encourage the system to show the emoji keyboard.
     override var textInputContextIdentifier: String? { "" }
-
+    
     /// Overrides the text input mode to prioritize the emoji keyboard when available.
     override var textInputMode: UITextInputMode? {
         for mode in UITextInputMode.activeInputModes {
