@@ -1,5 +1,7 @@
 # SwiftUI AdaptiveImageGlyph
 
+![Two iPhones displaying a SwiftUI application titled “SwiftUI AdaptiveImageGlyph.” On the left device, a modal or sheet with a “Cancel” button and an area featuring two emoji icons is visible. The right device shows a grid layout containing repeating emoji combinations of an angry face and a desktop computer](assets/banner.png)
+
 SwiftUI AdaptiveImageGlyph is a sample project that demonstrates how to integrate UITextView into a SwiftUI app to enable rich text editing with support for Adaptive Image Glyphs, including Genmojis introduced in iOS 18.
 
 ## Features
